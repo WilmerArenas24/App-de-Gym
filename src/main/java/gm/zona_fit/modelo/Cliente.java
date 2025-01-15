@@ -10,7 +10,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+//@ToString
 @EqualsAndHashCode
 public class Cliente {
     @Id
@@ -19,5 +19,15 @@ public class Cliente {
     private String nombre;
     private String apellido;
     private Integer membresia;
+
+
+    @Override
+    public String toString() {
+        return "Cliente[Id: " + id + "," +
+                " Nombre: '" + nombre + "'," +
+                " Apellido: '" + apellido + "'," +
+                " Membresia: '" + membresia + "']";
+
+    }
 
 }
