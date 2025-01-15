@@ -87,6 +87,77 @@ public class ZonaFitApplication implements CommandLineRunner {
 
 			}
 
+			case 3 -> {
+				logger.info(nl+"---Agregar Cliente---"+nl);
+				logger.info("Nombre: ");
+				var nombre = consola.nextLine();
+				logger.info("Apellido: ");
+				var apellido = consola.nextLine();
+				logger.info("Membresia: ");
+				var membresia = Integer.parseInt(consola.nextLine());
+
+				var cliente = new Cliente();
+
+				cliente.setNombre(nombre);
+				cliente.setApellido(apellido);
+				cliente.setMembresia(membresia);
+
+				clienteServicio.guardarCliente(cliente);
+
+				logger.info(nl + "Cliente agregado: "+cliente + nl);
+			}
+
+			case 4 ->{
+				logger.info(nl + "---Actualizar Cliente---"+nl);
+				logger.info("Id del cliente a actualizar: ");
+				var idCliente = Integer.parseInt(consola.nextLine());
+
+				Cliente cliente = clienteServicio.buscarClientePorId(idCliente);
+
+				if (cliente != null){
+					logger.info("Nuevo Nombre: ");
+					var nombre = consola.nextLine();
+					logger.info("Nuevo Apellido: ");
+					var apellido = consola.nextLine();
+					logger.info("Nueva Membresia: ");
+					var membresia = Integer.parseInt(consola.nextLine());
+
+					cliente.setNombre(nombre);
+					cliente.setApellido(apellido);
+					cliente.setMembresia(membresia);
+
+					clienteServicio.guardarCliente(cliente);
+
+					logger.info("Cliente modificado: " + cliente + nl);
+				}else {
+					logger.info("Cliente no encontrado!");
+				}
+
+
+
+			}
+
+			case 5 ->{
+				logger.info(nl + "---Eliminar Cliente---" + nl);
+				logger.info("Id del cliente a eliminar: ");
+				var idCliente = Integer.parseInt(consola.nextLine());
+
+				Cliente cliente = clienteServicio.buscarClientePorId(idCliente);
+
+				if (cliente != null){
+					clienteServicio.eliminarCliente(cliente);
+					logger.info("Cliente Eliminado: "+cliente);
+				}else {
+					logger.info("Cliente no encontrado");
+				}
+			}
+
+			case 6 ->{
+				logger.info(nl+"Hasta pronto!!"+nl);
+				salir = true;
+			}
+			default -> logger.info("Opción incorrecta!!");
+
 		}
 		return salir;
 	}
