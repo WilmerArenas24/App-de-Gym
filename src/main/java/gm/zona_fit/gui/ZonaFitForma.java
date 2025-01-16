@@ -6,10 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 @Component //Recuperar objectos de spring
 public class ZonaFitForma extends JFrame{
     private JPanel panelPrincipal;
+    private JTable clientesTabla;
+    private JTextField textField1;
+    private JTextField textField2;
+    private JTextField textField3;
+
+    private DefaultTableModel tableModeloClientes;
 
 
     IClienteServicio clienteServicio;
@@ -28,4 +35,11 @@ public class ZonaFitForma extends JFrame{
     }
 
 
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        this.tableModeloClientes = new DefaultTableModel(0,4);
+        String[] cabeceros = {"Id","Nombre","Apellido","Membresia"};
+        this.tableModeloClientes.setColumnIdentifiers(cabeceros);
+        this.clientesTabla = new JTable(tableModeloClientes);
+    }
 }
