@@ -12,7 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.List;
 import java.util.Scanner;
 
-@SpringBootApplication
+//Para evitar levantar la consola, comentamos @SpringBootApplication
+//@SpringBootApplication
 public class ZonaFitApplication implements CommandLineRunner {
 
 	@Autowired
