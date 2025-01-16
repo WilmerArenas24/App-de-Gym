@@ -20,13 +20,15 @@
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <font size="14" style="1"/>
+            </properties>
             <border type="none"/>
             <children>
               <component id="45d20" class="javax.swing.JTable" binding="clientesTabla" custom-create="true">
                 <constraints/>
                 <properties>
-                  <font size="20" style="1"/>
+                  <font size="14" style="0"/>
                 </properties>
               </component>
             </children>

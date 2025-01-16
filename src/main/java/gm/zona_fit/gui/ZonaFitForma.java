@@ -37,9 +37,29 @@ public class ZonaFitForma extends JFrame{
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
+        //Creando las cabeceras de la tabla
         this.tableModeloClientes = new DefaultTableModel(0,4);
         String[] cabeceros = {"Id","Nombre","Apellido","Membresia"};
         this.tableModeloClientes.setColumnIdentifiers(cabeceros);
         this.clientesTabla = new JTable(tableModeloClientes);
+
+        //Cargar las filas en la tabla
+        listarClientes();
+    }
+
+
+    private void listarClientes(){
+        this.tableModeloClientes.setRowCount(0);
+        var clientes = this.clienteServicio.listarCliente();
+        clientes.forEach(cliente -> {
+            //Creando renglon
+            Object[] renglonCliente = {
+                    cliente.getId(),
+                    cliente.getNombre(),
+                    cliente.getApellido(),
+                    cliente.getMembresia()
+            };
+            this.tableModeloClientes.addRow(renglonCliente);
+        });
     }
 }
