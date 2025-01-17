@@ -1,5 +1,6 @@
 package gm.zona_fit.gui;
 
+import gm.zona_fit.modelo.Cliente;
 import gm.zona_fit.servicio.ClienteServicio;
 import gm.zona_fit.servicio.IClienteServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 @Component //Recuperar objectos de spring
 public class ZonaFitForma extends JFrame{
@@ -28,6 +31,7 @@ public class ZonaFitForma extends JFrame{
     public ZonaFitForma(ClienteServicio clienteServicio){
         this.clienteServicio = clienteServicio;
         iniciarForma();
+        guardarButton.addActionListener(e -> guardarCliente());
     }
 
     private void iniciarForma(){
@@ -36,7 +40,6 @@ public class ZonaFitForma extends JFrame{
         setSize(900,700);
         setLocationRelativeTo(null); //Centra evntana
     }
-
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
@@ -49,7 +52,6 @@ public class ZonaFitForma extends JFrame{
         //Cargar las filas en la tabla
         listarClientes();
     }
-
 
     private void listarClientes(){
         this.tableModeloClientes.setRowCount(0);
@@ -65,4 +67,49 @@ public class ZonaFitForma extends JFrame{
             this.tableModeloClientes.addRow(renglonCliente);
         });
     }
+
+    private void guardarCliente(){
+        if (nombreTexto.getText().equals("")){
+            mostrarMensaje("Nombre no puede estar vacío");
+            nombreTexto.requestFocusInWindow();
+            return;
+        } else if (apellidoTexto.getText().equals("")){
+            mostrarMensaje("Apellido no puede estar vacío");
+            apellidoTexto.requestFocusInWindow();
+            return;
+        }else if (membresiaTexto.getText().equals("")){
+            mostrarMensaje("Membresía no puede estar vacío");
+            membresiaTexto.requestFocusInWindow();
+            return;
+        }
+
+        //Recuperar los valores del formulario
+        var nombre = nombreTexto.getText();
+        var apellido = apellidoTexto.getText();
+        var membresia = Integer.parseInt(membresiaTexto.getText());
+
+        var cliente = new Cliente();
+
+        cliente.setNombre(nombre);
+        cliente.setApellido(apellido);
+        cliente.setMembresia(membresia);
+
+        //Insertando el cliente en la BD
+        this.clienteServicio.guardarCliente(cliente);
+
+        //Limpiando textos
+        limpiarFormulario();
+        listarClientes();
+    }
+
+    private void limpiarFormulario(){
+        nombreTexto.setText("");
+        apellidoTexto.setText("");
+        membresiaTexto.setText("");
+    }
+
+    private void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
 }
