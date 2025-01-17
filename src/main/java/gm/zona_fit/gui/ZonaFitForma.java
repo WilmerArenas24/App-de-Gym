@@ -42,6 +42,9 @@ public class ZonaFitForma extends JFrame{
                 cargarClienteSeleccionado();
             }
         });
+        eliminarButton.addActionListener(e -> {
+            eliminarCliente();
+        });
     }
 
     private void iniciarForma(){
@@ -134,6 +137,29 @@ public class ZonaFitForma extends JFrame{
             this.apellidoTexto.setText(apellido);
             var membresia = clientesTabla.getModel().getValueAt(renglon,3).toString();
             this.membresiaTexto.setText(membresia);
+        }
+    }
+
+    private void eliminarCliente(){
+        //Recuperar los valores del formulario
+        var nombre = nombreTexto.getText();
+        var apellido = apellidoTexto.getText();
+        var renglon = clientesTabla.getSelectedRow();
+
+        if (renglon != -1){
+            var idClienteStr = clientesTabla.getModel().getValueAt(renglon,0).toString();
+            this.idCliente = Integer.parseInt(idClienteStr);
+            var cliente = new Cliente();
+            cliente.setId(this.idCliente);
+            clienteServicio.eliminarCliente(cliente);
+
+            mostrarMensaje("Se ha eliminado el cliente: "+this.idCliente+" " +nombre+" "+apellido );
+            limpiarFormulario();
+            listarClientes();
+
+        }
+        else if (idCliente == null){
+            mostrarMensaje("Debe elegir un Cliente para eliminar");
         }
     }
 
