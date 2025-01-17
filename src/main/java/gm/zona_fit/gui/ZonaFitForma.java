@@ -10,6 +10,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 @Component //Recuperar objectos de spring
 public class ZonaFitForma extends JFrame{
@@ -23,6 +25,7 @@ public class ZonaFitForma extends JFrame{
     private JButton limpiarButton;
 
     private DefaultTableModel tableModeloClientes;
+    private Integer idCliente;
 
 
     IClienteServicio clienteServicio;
@@ -32,6 +35,13 @@ public class ZonaFitForma extends JFrame{
         this.clienteServicio = clienteServicio;
         iniciarForma();
         guardarButton.addActionListener(e -> guardarCliente());
+        clientesTabla.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                cargarClienteSeleccionado();
+            }
+        });
     }
 
     private void iniciarForma(){
@@ -100,6 +110,21 @@ public class ZonaFitForma extends JFrame{
         //Limpiando textos
         limpiarFormulario();
         listarClientes();
+    }
+
+    private void cargarClienteSeleccionado(){
+        var renglon = clientesTabla.getSelectedRow();
+        if (renglon != -1){
+            //-1 significa que no se selecciono ningun registro
+            var id = clientesTabla.getModel().getValueAt(renglon, 0).toString();
+            this.idCliente = Integer.parseInt(id);
+            var nombre = clientesTabla.getModel().getValueAt(renglon,1).toString();
+            this.nombreTexto.setText(nombre);
+            var apellido = clientesTabla.getModel().getValueAt(renglon, 2).toString();
+            this.apellidoTexto.setText(apellido);
+            var membresia = clientesTabla.getModel().getValueAt(renglon, 3).toString();
+            this.membresiaTexto.setText(membresia);
+        }
     }
 
     private void limpiarFormulario(){

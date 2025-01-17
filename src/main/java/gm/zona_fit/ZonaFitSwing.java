@@ -24,8 +24,6 @@ public class ZonaFitSwing {
         SwingUtilities.invokeLater(()->{
             ZonaFitForma zonaFitForma = contextoSpring.getBean(ZonaFitForma.class);
             zonaFitForma.setVisible(true);
-
-
         }); //Ejecutar swing indirectamente
 
     }
