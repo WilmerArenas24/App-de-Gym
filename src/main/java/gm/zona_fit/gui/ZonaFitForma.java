@@ -45,6 +45,10 @@ public class ZonaFitForma extends JFrame{
         eliminarButton.addActionListener(e -> {
             eliminarCliente();
         });
+        limpiarButton.addActionListener(e -> {
+            limpiarFormulario();
+
+        });
     }
 
     private void iniciarForma(){
@@ -57,10 +61,21 @@ public class ZonaFitForma extends JFrame{
     private void createUIComponents() {
         // TODO: place custom component creation code here
         //Creando las cabeceras de la tabla
-        this.tableModeloClientes = new DefaultTableModel(0,4);
+        //this.tableModeloClientes = new DefaultTableModel(0,4);
+
+        //Evitando que al dar doble click en la tabla se habilite para modificar
+        this.tableModeloClientes = new DefaultTableModel(0,4){
+            @Override
+            public boolean isCellEditable(int row , int column){
+                return false;
+            }
+        };
         String[] cabeceros = {"Id","Nombre","Apellido","Membresia"};
         this.tableModeloClientes.setColumnIdentifiers(cabeceros);
         this.clientesTabla = new JTable(tableModeloClientes);
+
+        //Restringir seleccionar varias columnas en la tabla
+        this.clientesTabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         //Cargar las filas en la tabla
         listarClientes();
